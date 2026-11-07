@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   padding: 20px 16px 32px;
-  gap: 16px;
+  gap: 18px;
 }
 
 /* ---- buttons ---- */
@@ -19,6 +19,12 @@
   background: var(--accent);
   color: #fff;
   cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.primary-button:active {
+  transform: scale(0.98);
+  opacity: 0.9;
 }
 
 .back-button {
@@ -39,8 +45,14 @@
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface);
+  box-shadow: var(--shadow);
   color: var(--text-h);
   cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.option-button:active {
+  transform: scale(0.98);
 }
 
 .option-button.wide {
@@ -64,7 +76,7 @@
   margin-top: auto;
   border: none;
   background: transparent;
-  color: var(--text);
+  color: var(--text-dim);
   text-decoration: underline;
   font-size: 15px;
   padding: 12px;
@@ -76,13 +88,14 @@
 .home {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .home h1 {
-  font-size: 26px;
+  font-size: 27px;
   text-align: center;
   margin: 8px 0 4px;
+  letter-spacing: -0.3px;
 }
 
 .shuffle-button {
@@ -93,31 +106,53 @@
 .subject-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .subject-card {
   display: flex;
+  align-items: stretch;
+  gap: 1px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.subject-card-main {
+  flex: 1;
+  display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   text-align: left;
   padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  border: none;
+  border-left: 4px solid var(--accent);
   background: var(--surface);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.subject-notes-button {
+  flex-shrink: 0;
+  width: 64px;
+  border: none;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
 }
 
 .subject-name {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-h);
 }
 
 .subject-meta {
   font-size: 14px;
-  color: var(--text);
-  opacity: 0.8;
+  color: var(--text-dim);
 }
 
 /* ---- scope picker / stats headers ---- */
@@ -128,11 +163,16 @@
   gap: 8px;
 }
 
+.scope-header h2 {
+  font-size: 20px;
+}
+
 .scope-picker,
-.stats-view {
+.stats-view,
+.subject-notes {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 /* ---- quiz runner ---- */
@@ -140,7 +180,7 @@
 .quiz-runner {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
   flex: 1;
 }
 
@@ -152,38 +192,46 @@
 
 .quiz-progress {
   font-size: 14px;
-  color: var(--text);
-  opacity: 0.8;
+  font-weight: 600;
+  color: var(--text-dim);
 }
 
 .question-card {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .question-prompt {
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 19px;
+  line-height: 1.65;
   color: var(--text-h);
+  font-weight: 500;
 }
 
 .choice-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .choice-button {
   width: 100%;
   text-align: left;
-  padding: 18px;
-  font-size: 17px;
+  padding: 18px 20px;
+  font-size: 17.5px;
+  line-height: 1.5;
   border: 2px solid var(--border);
   border-radius: 14px;
   background: var(--surface);
+  box-shadow: var(--shadow);
   color: var(--text-h);
   cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.choice-button:not(:disabled):active {
+  transform: scale(0.98);
 }
 
 .choice-button:disabled {
@@ -205,12 +253,13 @@
 }
 
 .explanation {
-  font-size: 15px;
-  line-height: 1.6;
-  padding: 14px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  padding: 16px;
   border-radius: 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  color: var(--text-h);
   white-space: pre-line;
 }
 
@@ -229,7 +278,7 @@
 }
 
 .score {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 700;
   color: var(--text-h);
 }
@@ -237,21 +286,23 @@
 /* ---- stats ---- */
 
 .stats-subject {
-  padding: 14px;
+  padding: 16px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
 .stats-subject h3 {
   display: flex;
   justify-content: space-between;
   font-size: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .stats-pct {
   color: var(--accent);
+  font-weight: 700;
 }
 
 .stats-formula-list {
@@ -260,12 +311,68 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .stats-formula-list li {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  gap: 8px;
+  font-size: 14.5px;
   color: var(--text);
+}
+
+.stats-formula-list li span:first-child {
+  color: var(--text-dim);
+}
+
+/* ---- subject notes ---- */
+
+.notes-hint {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.notes-hint code {
+  background: var(--accent-bg);
+  color: var(--accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.notes-textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: var(--sans);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text-h);
+  resize: vertical;
+}
+
+.notes-textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.notes-preview {
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-h);
+}
+
+.notes-preview-line {
+  min-height: 1.4em;
 }

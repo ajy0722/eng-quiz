@@ -12,10 +12,11 @@ export interface FormulaStats {
 interface StorageData {
   version: 1
   formulas: Record<string, FormulaStats>
+  notes: Record<string, string>
 }
 
 function emptyData(): StorageData {
-  return { version: 1, formulas: {} }
+  return { version: 1, formulas: {}, notes: {} }
 }
 
 function readAll(): StorageData {
@@ -24,7 +25,7 @@ function readAll(): StorageData {
     if (!raw) return emptyData()
     const parsed = JSON.parse(raw) as StorageData
     if (parsed.version !== 1 || !parsed.formulas) return emptyData()
-    return parsed
+    return { ...parsed, notes: parsed.notes ?? {} }
   } catch {
     return emptyData()
   }
@@ -66,4 +67,18 @@ export function recordAttempt(formulaId: string, subjectId: string, correct: boo
 
 export function resetAllStats(): void {
   writeAll(emptyData())
+}
+
+export function getSubjectNote(subjectId: string): string {
+  return readAll().notes[subjectId] ?? ''
+}
+
+export function setSubjectNote(subjectId: string, text: string): void {
+  const data = readAll()
+  if (text.trim().length === 0) {
+    delete data.notes[subjectId]
+  } else {
+    data.notes[subjectId] = text
+  }
+  writeAll(data)
 }
